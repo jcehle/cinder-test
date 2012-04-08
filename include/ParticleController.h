@@ -14,6 +14,7 @@ class ParticleController
     void draw();
     void addParticle( int xRes, int yRes, int res);
     void addParticles (int amt);
+    void addParticles (int amt, ci::Vec2f pos);
     void removeParticles (int amt);
     
     std::list<Particle> mParticles;

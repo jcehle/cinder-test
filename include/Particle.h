@@ -25,6 +25,11 @@ class Particle {
     
     float mVel;
     
+    int mAge;
+    int mLifeSpan;
+    bool mIsDead;
+    
+    
     float mRadius;
     float mScale;
     ci::Color mColor;

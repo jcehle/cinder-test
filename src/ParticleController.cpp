@@ -37,7 +37,14 @@ void ParticleController::update( const Channel32f &channel, const Vec2i &mouseLo
 {
     for (list<Particle>::iterator p = mParticles.begin(); p != mParticles.end(); ++p)
     {
-        p->update( channel, mouseLoc);
+        if(p->mIsDead)
+        {
+            p = mParticles.erase( p );
+        }
+        else
+        {
+            p->update( channel, mouseLoc);   
+        }
     }
 }
 
@@ -65,6 +72,20 @@ void ParticleController::addParticles( int amt)
         mParticles.push_back( Particle (Vec2f( x, y )));
     }
 }
+
+void ParticleController::addParticles(int amt, const Vec2f pos)
+{
+    for (int i=0; i<amt; i++) {
+       // float x = pos.x + Rand::randInt( 10 );
+       // float y = pos.y + Rand::randInt( 10 );
+       // mParticles.push_back( Particle( Vec2f( x,y )));
+        
+        //more clever
+        Vec2f rand = Rand::randVec2f() * 10.0f;
+        mParticles.push_back(Particle ( rand + pos ));
+    }
+}
+
 
 void ParticleController::removeParticles(int amt)
 {

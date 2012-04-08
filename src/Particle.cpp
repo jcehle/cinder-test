@@ -21,25 +21,19 @@ Particle::Particle( ci::Vec2f loc)
     mRadius = 2.0f;
     mScale = 3.0f;
     mColor = Color( 1.0f, 1.0f, 1.0f);
+    
+    mIsDead = false;
+    mAge = 0;
+    mLifeSpan = 100;
 }
 
 
 
 void Particle::update ( const Channel32f &channel, const Vec2i &mouseLoc)
 {
-    mCursorPos = mouseLoc;
-    mDirToCursor = mouseLoc - mLoc;
-    
-    mDirToCursor.safeNormalize();
-    
-    
-    float time = app::getElapsedSeconds() * 4.0f;
-    float dist = mDirToCursor.length() * 0.05f;
-    float sinOffset = sin( dist - time ) * 10 ;
-    
-    mRadius = channel.getValue(mLoc) * mScale;
-    mDirToCursor *= sinOffset * 15.0f;
-
+    mAge++;
+    if(mAge > mLifeSpan)
+        mIsDead = true;
 }
 
 void Particle::draw()

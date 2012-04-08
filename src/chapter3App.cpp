@@ -22,6 +22,7 @@ class chapter3App : public AppBasic {
     void mouseMove ( MouseEvent event );
     void mouseDrag ( MouseEvent event );
 	void mouseDown( MouseEvent event );	
+    void mouseUp ( MouseEvent event );
 	void update();
 	void draw();
     
@@ -34,6 +35,7 @@ class chapter3App : public AppBasic {
     
     bool mDrawParticles;
     bool mDrawImage;
+    bool mIsPressed;
     
 };
 
@@ -61,6 +63,16 @@ void chapter3App::keyDown( KeyEvent event )
     }
 }
 
+void chapter3App::mouseDown(MouseEvent event)
+{
+    mIsPressed = true;
+}
+
+void chapter3App::mouseUp(MouseEvent event)
+{
+    mIsPressed = false;
+}
+
 
 void chapter3App::mouseMove(MouseEvent event)
 {
@@ -71,31 +83,28 @@ void chapter3App::mouseDrag(MouseEvent event)
 {
     mouseMove(event);
 }
-
-
-
+ 
 void chapter3App::setup()
 {
     Url url( "http://libcinder.org/media/tutorial/paris.jpg" );
     mChannel = Channel32f ( loadImage ( loadUrl( url )));
     mTexture = mChannel;
     
-    mParticleController = ParticleController( RESOLUTION );
+   // mParticleController = ParticleController( RESOLUTION );
     
     mMouseLoc = Vec2i( 0, 0 );
     
     mDrawParticles = true;
     mDrawImage = false;
-    
 }
 
-void chapter3App::mouseDown( MouseEvent event )
-{
-}
 
 void chapter3App::update()
 {
     if (! mChannel ) return;
+    
+    if( mIsPressed )
+        mParticleController.addParticles( 5, mMouseLoc );
     
     mParticleController.update( mChannel, mMouseLoc );
 }
