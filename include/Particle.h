@@ -22,11 +22,12 @@ class Particle {
     ci::Vec2f mDir;
     ci::Vec2f mDirToCursor;
     ci::Vec2f mCursorPos;
+    
     float mVel;
     
     float mRadius;
     float mScale;
-    float mColor;
+    ci::Color mColor;
     
     
 };
