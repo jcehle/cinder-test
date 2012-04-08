@@ -30,21 +30,15 @@ void Particle::update ( const Channel32f &channel, const Vec2i &mouseLoc)
     mCursorPos = mouseLoc;
     mDirToCursor = mouseLoc - mLoc;
     
-    float time = app::getElapsedSeconds() * 4.0f;
-    float dist = mDirToCursor.length() * 0.05f;
-    float sinOffset = sin( dist - time ) * 100.0f;
-    
     mDirToCursor.safeNormalize();
     
-    Vec2f newLoc = mLoc + mDirToCursor * sinOffset;
-    newLoc.x = constrain( newLoc.x, 0.0f, channel.getWidth() - 1.0f );
-    newLoc.y = constrain( newLoc.y, 0.0f, channel.getHeight() - 1.0f);
     
+    float time = app::getElapsedSeconds() * 4.0f;
+    float dist = mDirToCursor.length() * 0.05f;
+    float sinOffset = sin( dist - time ) * 10 ;
     
-    
-    float gray = channel.getValue( newLoc );
-    mColor = Color( gray, gray, gray );
-    mRadius = mScale;
+    mRadius = channel.getValue(mLoc) * mScale;
+    mDirToCursor *= sinOffset * 15.0f;
 
 }
 
@@ -59,11 +53,9 @@ void Particle::draw()
  //   float headRadius = 3.0f;
  //   gl::drawVector(p1, p2, headLength, headRadius);
     
-    gl::color(mColor);
-    Rectf rect ( mLoc.x, mLoc.y, mLoc.x + mRadius, mLoc.y + mRadius );
-    gl::drawSolidRect(rect);
+
     
-    //gl::drawSolidCircle(mLoc + mDirToCursor * 0.2f, mRadius);
+    gl::drawSolidCircle(mLoc + mDirToCursor, mRadius);
     
     
     

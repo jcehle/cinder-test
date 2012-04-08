@@ -35,7 +35,6 @@ class chapter3App : public AppBasic {
     bool mDrawParticles;
     bool mDrawImage;
     
-    
 };
 
 void chapter3App::prepareSettings(Settings *settings)
