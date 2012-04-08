@@ -21,6 +21,7 @@ class Particle {
     ci::Vec2f mLocPer;
     ci::Vec2f mDir;
     ci::Vec2f mDirToCursor;
+    ci::Vec2f mCursorPos;
     float mVel;
     
     float mRadius;

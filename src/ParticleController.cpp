@@ -3,8 +3,11 @@
 #include "cinder/Rand.h"
 #include "cinder/Vector.h"
 #include "ParticleController.h"
+#include "cinder/app/AppBasic.h"
+
 
 using namespace ci;
+using namespace ci::app;
 using std::list;
 
 ParticleController::ParticleController()
@@ -15,6 +18,8 @@ ParticleController::ParticleController ( int res)
 {
     mXRes = app::getWindowWidth() / res;
     mYRes = app::getWindowHeight() / res;
+    
+    console() << "xres: " << mXRes << std::endl;
     
     for (int y = 0; y<mYRes; y++) 
     {

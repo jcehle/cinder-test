@@ -5,7 +5,7 @@
 #include "cinder/Vector.h"
 #include "ParticleController.h"
 
-#define RESOLUTION 5
+#define RESOLUTION 20
 
 
 using namespace ci;
@@ -19,6 +19,8 @@ class chapter3App : public AppBasic {
    // void mouseMove ( MouseEvent event );
    // void mouseDrag ( MouseEvent event );
 	void setup();
+    void mouseMove ( MouseEvent event );
+    void mouseDrag ( MouseEvent event );
 	void mouseDown( MouseEvent event );	
 	void update();
 	void draw();
@@ -44,8 +46,34 @@ void chapter3App::prepareSettings(Settings *settings)
 
 void chapter3App::keyDown( KeyEvent event )
 {
-    //
+    if (event.getChar() == '1' )
+    {
+        mDrawImage = !mDrawImage;
+    }
+    else if( event.getChar() == '2' )
+    {
+        mDrawParticles = !mDrawParticles;
+    }
+    else if( event.getCode() == KeyEvent::KEY_RIGHT )
+    {
+        console() << " well key r pushed too fecker " << std::endl;
+        Color myColor( 1.0f, 0.5f, 0.25f);
+        console() << " here is the col " << myColor << std::endl;
+    }
 }
+
+
+void chapter3App::mouseMove(MouseEvent event)
+{
+    mMouseLoc = event.getPos(); 
+}
+
+void chapter3App::mouseDrag(MouseEvent event)
+{
+    mouseMove(event);
+}
+
+
 
 void chapter3App::setup()
 {
@@ -77,7 +105,7 @@ void chapter3App::draw()
 {
 	// clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) ); 
-    
+        
     if(mDrawImage)
     {
         mTexture.enableAndBind();
@@ -88,10 +116,7 @@ void chapter3App::draw()
     {
         glDisable(GL_TEXTURE_2D);
         mParticleController.draw();
-
     }
-    
-    
 }
 
 
