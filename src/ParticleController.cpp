@@ -21,13 +21,16 @@ ParticleController::ParticleController ( int res)
     
     console() << "xres: " << mXRes << std::endl;
     
+    int pCount = 0;
     for (int y = 0; y<mYRes; y++) 
     {
         for (int x = 0; x < mXRes; x++)
         {
             addParticle(x, y, res);
+            pCount++;
         }
     }
+    console() << "total particles: " << pCount << std::endl;
 }
 
 void ParticleController::update( const Channel32f &channel, const Vec2i &mouseLoc)

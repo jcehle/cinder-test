@@ -5,7 +5,7 @@
 #include "cinder/Vector.h"
 #include "ParticleController.h"
 
-#define RESOLUTION 20
+#define RESOLUTION 5
 
 
 using namespace ci;
