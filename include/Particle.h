@@ -12,7 +12,8 @@ class Particle {
   
   public:
     Particle();
-    Particle( ci::Vec2f );
+    Particle( ci::Vec2f loc);
+    Particle( ci::Vec2f loc, ci::Vec2f vel);
     
     void update( const ci::Channel32f &channel, const ci::Vec2i &mouseLoc);
     void draw();
@@ -23,7 +24,8 @@ class Particle {
     ci::Vec2f mDirToCursor;
     ci::Vec2f mCursorPos;
     
-    float mVel;
+    ci::Vec2f mVel;
+    float mVelDecay;
     
     int mAge;
     int mLifeSpan;

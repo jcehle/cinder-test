@@ -74,7 +74,7 @@ void ParticleController::addParticles( int amt)
     }
 }
 
-void ParticleController::addParticles(int amt, const Vec2f pos)
+void ParticleController::addParticles(int amt, const Vec2f &pos)
 {
     for (int i=0; i<amt; i++) {
        // float x = pos.x + Rand::randInt( 10 );
@@ -84,6 +84,16 @@ void ParticleController::addParticles(int amt, const Vec2f pos)
         //more clever
         Vec2f rand = Rand::randVec2f() * 10.0f;
         mParticles.push_back(Particle ( rand + pos ));
+    }
+}
+
+void ParticleController::addParticles(int amt, const Vec2f &pos, const Vec2f &mouseVel)
+{
+    for (int i=0; i<amt; i++)
+    {
+        Vec2f rand = Rand::randVec2f() * 10.0f;
+        float velDamp = Rand::randFloat(0.1f, 0.5f);
+        mParticles.push_back( Particle(pos + rand, mouseVel * velDamp));
     }
 }
 

@@ -5,6 +5,7 @@
 #include "cinder/Vector.h"
 #include "ParticleController.h"
 
+
 #define RESOLUTION 5
 
 
@@ -30,6 +31,8 @@ class chapter3App : public AppBasic {
     gl::Texture mTexture;
     
     Vec2i mMouseLoc;
+    Vec2f mMouseLastPos;
+    Vec2f mMouseVel;
     
     ParticleController mParticleController;
     
@@ -76,7 +79,11 @@ void chapter3App::mouseUp(MouseEvent event)
 
 void chapter3App::mouseMove(MouseEvent event)
 {
+
     mMouseLoc = event.getPos(); 
+    mMouseVel = mMouseLoc - mMouseLastPos;
+    mMouseLastPos = (Vec2f)mMouseLoc;
+    console() << "mouse vel: " << mMouseVel << std::endl;
 }
 
 void chapter3App::mouseDrag(MouseEvent event)
@@ -90,8 +97,7 @@ void chapter3App::setup()
     mChannel = Channel32f ( loadImage ( loadUrl( url )));
     mTexture = mChannel;
     
-   // mParticleController = ParticleController( RESOLUTION );
-    
+
     mMouseLoc = Vec2i( 0, 0 );
     
     mDrawParticles = true;
@@ -104,7 +110,7 @@ void chapter3App::update()
     if (! mChannel ) return;
     
     if( mIsPressed )
-        mParticleController.addParticles( 5, mMouseLoc );
+        mParticleController.addParticles( 5, mMouseLoc, mMouseVel );
     
     mParticleController.update( mChannel, mMouseLoc );
 }
