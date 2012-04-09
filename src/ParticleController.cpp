@@ -35,7 +35,7 @@ ParticleController::ParticleController ( int res)
 
 void ParticleController::update( const Channel32f &channel, const Vec2i &mouseLoc)
 {
-    for (list<Particle>::iterator p = mParticles.begin(); p != mParticles.end(); ++p)
+    for (list<Particle>::iterator p = mParticles.begin(); p != mParticles.end(); )
     {
         if(p->mIsDead)
         {
@@ -44,6 +44,7 @@ void ParticleController::update( const Channel32f &channel, const Vec2i &mouseLo
         else
         {
             p->update( channel, mouseLoc);   
+            ++p;
         }
     }
 }
