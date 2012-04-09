@@ -33,6 +33,28 @@ ParticleController::ParticleController ( int res)
     console() << "total particles: " << pCount << std::endl;
 }
 
+void ParticleController::setSampleSurface(const ci::Surface &surf)
+{
+    sampleSurface = surf;
+}
+
+void ParticleController::update( const Vec2i &mouseLoc)
+{
+    for (list<Particle>::iterator p = mParticles.begin(); p != mParticles.end(); )
+    {
+        if(p->mIsDead)
+        {
+            p = mParticles.erase( p );
+        }
+        else
+        {
+            p->update( mouseLoc);   
+            ++p;
+        }
+    } 
+}
+
+
 void ParticleController::update( const Channel32f &channel, const Vec2i &mouseLoc)
 {
     for (list<Particle>::iterator p = mParticles.begin(); p != mParticles.end(); )
@@ -92,8 +114,10 @@ void ParticleController::addParticles(int amt, const Vec2f &pos, const Vec2f &mo
     for (int i=0; i<amt; i++)
     {
         Vec2f rand = Rand::randVec2f() * 10.0f;
+        Vec2f particlePosition = pos + rand;
         float velDamp = Rand::randFloat(0.1f, 0.5f);
-        mParticles.push_back( Particle(pos + rand, mouseVel * velDamp));
+        ColorA pColor = sampleSurface.getPixel(particlePosition);
+        mParticles.push_back( Particle(particlePosition, mouseVel * velDamp, pColor));
     }
 }
 

@@ -10,9 +10,15 @@ class ParticleController
   public:
     ParticleController();
     ParticleController( int res);
+    
+    void update( const ci::Vec2i &mouseLoc);
     void update( const ci::Channel32f &channel, const ci::Vec2i &mouseLoc);
+    
     void draw();
+    
     void addParticle( int xRes, int yRes, int res);
+    
+    void setSampleSurface( const ci::Surface &surf);
     
     void addParticles (int amt);
     void addParticles (int amt, const ci::Vec2f &pos);
@@ -23,6 +29,8 @@ class ParticleController
     std::list<Particle> mParticles;
     
     int mXRes, mYRes;
+    
+    ci::Surface sampleSurface;
     
 };
 

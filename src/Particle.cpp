@@ -26,10 +26,9 @@ Particle::Particle( Vec2f loc)
     mIsDead = false;
     mAge = 0;
     mLifeSpan = Rand::randInt(50, 150);
-
 }
 
-Particle::Particle ( Vec2f loc, Vec2f vel )
+Particle::Particle ( Vec2f loc, Vec2f vel, ColorA col = ColorA(1.0f, 1.0f, 1.0f) )
 {
     mLoc = loc;
     mVel = vel;
@@ -39,14 +38,26 @@ Particle::Particle ( Vec2f loc, Vec2f vel )
     mVelDecay = Rand::randFloat(0.9f, 0.99f);
     mRadius = 2.0f;
     mScale = 3.0f;
-    mColor = Color( 1.0f, 1.0f, 1.0f);
+    mColor = col;
     
     mIsDead = false;
     mAge = 0;
     mLifeSpan = Rand::randInt(50, 150);
 }
 
-
+void Particle::update (const Vec2i &mouseLoc)
+{
+    mAge++;
+    mLoc += mVel;
+    mVel *= mVelDecay;
+    
+    float agePer = 1.0f - ( mAge / (float)mLifeSpan );
+    mRadius = 3.0f * agePer;
+    
+    
+    if(mAge > mLifeSpan)
+        mIsDead = true;
+}
 
 void Particle::update ( const Channel32f &channel, const Vec2i &mouseLoc)
 {
@@ -74,7 +85,7 @@ void Particle::draw()
  //   gl::drawVector(p1, p2, headLength, headRadius);
     
 
-    
+    gl::color(mColor);
     gl::drawSolidCircle(mLoc + mDirToCursor, mRadius);
     
     

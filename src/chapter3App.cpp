@@ -27,6 +27,9 @@ class chapter3App : public AppBasic {
 	void update();
 	void draw();
     
+    Surface mColorSurface;
+    gl::Texture mColorTexture;
+    
     Channel32f mChannel;
     gl::Texture mTexture;
     
@@ -83,12 +86,30 @@ void chapter3App::mouseMove(MouseEvent event)
     mMouseLoc = event.getPos(); 
     mMouseVel = mMouseLoc - mMouseLastPos;
     mMouseLastPos = (Vec2f)mMouseLoc;
-    console() << "mouse vel: " << mMouseVel << std::endl;
+    //console() << "mouse vel: " << mMouseVel << std::endl;
 }
 
 void chapter3App::mouseDrag(MouseEvent event)
 {
     mouseMove(event);
+}
+
+Surface setupColorSurface()
+{
+    Surface surf( loadImage( loadResource( "color_800x600.png")));
+    return surf;
+}
+
+Area getSurfaceArea( const Surface surf)
+{
+    Area a(0, 0, surf.getWidth(), surf.getHeight()); 
+    return a;
+}
+
+Surface::Iter getSurfaceIter( Surface *surf, Area area)
+{
+    Surface::Iter i = surf->getIter(area);
+    return i;
 }
  
 void chapter3App::setup()
@@ -97,6 +118,10 @@ void chapter3App::setup()
     mChannel = Channel32f ( loadImage ( loadUrl( url )));
     mTexture = mChannel;
     
+    mColorSurface = setupColorSurface();
+    mColorTexture = gl::Texture( mColorSurface );
+    mParticleController.setSampleSurface( mColorSurface );
+
 
     mMouseLoc = Vec2i( 0, 0 );
     
@@ -122,8 +147,8 @@ void chapter3App::draw()
         
     if(mDrawImage)
     {
-        mTexture.enableAndBind();
-        gl::draw( mTexture, getWindowBounds());
+        mColorTexture.enableAndBind();
+        gl::draw( mColorTexture, getWindowBounds());
     }
     
     if ( mDrawParticles )
