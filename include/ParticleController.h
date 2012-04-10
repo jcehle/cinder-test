@@ -2,6 +2,7 @@
 #define chapter3_ParticleController_h
 
 #include "cinder/Channel.h"
+#include "cinder/Perlin.h"
 #include "Particle.h"
 #include <list>
 
@@ -12,7 +13,7 @@ class ParticleController
     ParticleController( int res);
     
     void update( const ci::Vec2i &mouseLoc);
-    void update( const ci::Channel32f &channel, const ci::Vec2i &mouseLoc);
+    void update( const ci::Perlin &perlin, const ci::Channel32f &channel, const ci::Vec2i &mouseLoc);
     
     void draw();
     

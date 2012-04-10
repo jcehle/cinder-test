@@ -4,6 +4,7 @@
 #include "cinder/Vector.h"
 #include "ParticleController.h"
 #include "cinder/app/AppBasic.h"
+#include "cinder/Perlin.h"
 
 
 using namespace ci;
@@ -55,7 +56,7 @@ void ParticleController::update( const Vec2i &mouseLoc)
 }
 
 
-void ParticleController::update( const Channel32f &channel, const Vec2i &mouseLoc)
+void ParticleController::update(const Perlin &perlin, const Channel32f &channel, const Vec2i &mouseLoc)
 {
     for (list<Particle>::iterator p = mParticles.begin(); p != mParticles.end(); )
     {
@@ -65,7 +66,7 @@ void ParticleController::update( const Channel32f &channel, const Vec2i &mouseLo
         }
         else
         {
-            p->update( channel, mouseLoc);   
+            p->update(perlin, channel, mouseLoc);   
             ++p;
         }
     }

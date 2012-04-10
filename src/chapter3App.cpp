@@ -4,6 +4,7 @@
 #include "cinder/gl/Texture.h"
 #include "cinder/Vector.h"
 #include "ParticleController.h"
+#include "cinder/Perlin.h"
 
 
 #define RESOLUTION 5
@@ -26,6 +27,8 @@ class chapter3App : public AppBasic {
     void mouseUp ( MouseEvent event );
 	void update();
 	void draw();
+    
+    Perlin perlin;
     
     Surface mColorSurface;
     gl::Texture mColorTexture;
@@ -114,6 +117,9 @@ Surface::Iter getSurfaceIter( Surface *surf, Area area)
  
 void chapter3App::setup()
 {
+    setFrameRate( 60.0f );
+    perlin = Perlin();
+    
     Url url( "http://libcinder.org/media/tutorial/paris.jpg" );
     mChannel = Channel32f ( loadImage ( loadUrl( url )));
     mTexture = mChannel;
@@ -122,11 +128,11 @@ void chapter3App::setup()
     mColorTexture = gl::Texture( mColorSurface );
     mParticleController.setSampleSurface( mColorSurface );
 
-
     mMouseLoc = Vec2i( 0, 0 );
     
     mDrawParticles = true;
     mDrawImage = false;
+    mIsPressed = false;
 }
 
 
@@ -137,7 +143,7 @@ void chapter3App::update()
     if( mIsPressed )
         mParticleController.addParticles( 5, mMouseLoc, mMouseVel );
     
-    mParticleController.update( mChannel, mMouseLoc );
+    mParticleController.update(perlin, mChannel, mMouseLoc );
 }
 
 void chapter3App::draw()

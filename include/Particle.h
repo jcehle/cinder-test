@@ -4,6 +4,7 @@
 #include "cinder/Channel.h"
 #include "cinder/Vector.h"
 #include "cinder/Color.h"
+#include "cinder/Perlin.h"
 
 #include <vector>
 
@@ -17,7 +18,7 @@ class Particle {
     
     
     void update( const ci::Vec2i &mouseLoc);
-    void update( const ci::Channel32f &channel, const ci::Vec2i &mouseLoc);
+    void update( const ci::Perlin &perlin, const ci::Channel32f &channel, const ci::Vec2i &mouseLoc);
     
     void draw();
     
@@ -33,6 +34,8 @@ class Particle {
     int mAge;
     int mLifeSpan;
     bool mIsDead;
+    
+    float mAgePerlin;
     
     
     float mRadius;
